@@ -13,11 +13,13 @@ logger = logging.getLogger(__name__)
 def create_issue(github, title):
     repo = get_repository(github)
     me = github.me()
+    repo.local.git.fetch('origin')
+
     issue = github.create_issue(
         owner=me.name, repository=repo.remote.name, title=title)
     branch_name = '{}-{}-{}'.format(
         me.name, issue.number, re.sub('[^\w]', '', title)[:10])
-    repo.local.git.fetch('origin/master')
+
     repo.local.git.checkout('origin/master', b=branch_name)
     repo.local.git.push('origin', branch_name, set_upstream=True)
 
