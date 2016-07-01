@@ -94,8 +94,8 @@ merge作業
 <aging test>
 <qa test>
 <performance test>
-
-リリース作業
+リ
+oリース作業
 
 - masterをチェックアウト `git checkout -b master origin/master`
 - プルリクエストのチェックボックスがすべて付いているか確認
@@ -110,3 +110,9 @@ merge作業
 - masterのcommitをpull `git pull origin master`
 - git push
 - stable deploy
+
+
+fate issue create
+fate issue fix
+fate release create VERSION
+fate release merge
