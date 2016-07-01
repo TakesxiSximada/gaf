@@ -14,7 +14,7 @@ get_home_dir = functools.partial(
 def get_auth_file_path():
     return os.path.join(
         get_home_dir(),
-        '.yagithubflow/auth.json'
+        '.gaf/auth.json'
         )
 
 

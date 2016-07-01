@@ -47,13 +47,13 @@ def find_version(path, pattern='.*\.py$'):
 # Development Status :: 7 - Inactive
 
 setup(
-    name='yagithubflow',
+    name='gaf',
     version=find_version('src'),
     license='Apache License 2.0',
-    description='YAML parser that environment variable is expanded',
+    description='Github Argument Flow',
     long_description=read('README.rst'),
-    url='https://github.com/TakesxiSximada/yagithubflow',
-    keywords='YAML',
+    url='https://github.com/TakesxiSximada/gaf',
+    keywords='Git',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: Apache Software License',
@@ -67,7 +67,7 @@ setup(
         'Topic :: Software Development',
     ],
     author='TakesxiSximada',
-    author_email='sximada+yagithubflow@gmail.com',
+    author_email='sximada+gaf@gmail.com',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     platforms='any',
@@ -80,6 +80,6 @@ setup(
     ],
     entry_points="""\
     [console_scripts]
-    yagithubflow = yagithubflow.commands:main
+    gaf = gaf.commands:main
     """,
 )

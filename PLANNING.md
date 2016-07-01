@@ -1,3 +1,9 @@
+# start proejct
+
+- git init
+
+
+
 - deploy時の切り戻しを簡易にしたい -> 2系統運用
 | - master
 | - premaster
@@ -97,8 +103,8 @@ merge作業
 <aging test>
 <qa test>
 <performance test>
-リ
-oリース作業
+
+リリース作業
 
 - masterをチェックアウト `git checkout -b master origin/master`
 - プルリクエストのチェックボックスがすべて付いているか確認
@@ -113,7 +119,6 @@ oリース作業
 - masterのcommitをpull `git pull origin master`
 - git push
 - stable deploy
-
 
 fate issue create
 fate issue fix

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 AUTH_TOKEN_FILE = os.path.join(
     os.path.expanduser('~'),
-    '.yagithubflow',
+    '.gaf',
     'auth_token.json',
     )
 
@@ -35,7 +35,7 @@ def create_auth_token(path=AUTH_TOKEN_FILE):
 
     auth = github3.authorize(
         username, password, scopes=['repo'],
-        note='yagithubflow', note_url='http://localhost',
+        note='gaf', note_url='http://localhost',
         two_factor_callback=get_two_factor_authentication_code,
         )
     with open(path, 'wb') as fp:

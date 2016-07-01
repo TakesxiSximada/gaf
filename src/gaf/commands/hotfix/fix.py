@@ -1,10 +1,11 @@
 import sys
-from yagithubflow import bootstrap
+from gaf import bootstrap
 
 
 def main(argv=sys.argv[1:]):
     flow = bootstrap()
-    return flow.fix()
+    hotfix = flow.hotfix
+    return hotfix.fix()
 
 if __name__ == '__main__':
     sys.exit(main())
