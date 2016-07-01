@@ -57,6 +57,9 @@ develop [auto deploy] -> aging and qa
 topic
 
 
+リポジトリ準備
+- labelを作成 (ACCEPT/REJECT)
+
 開発作業
 - issueを作成 `git issue create -m "issue title"`
 - topic branchを作成 `git checkout -b USERNAME-ISSUEID-ANNOTATION`
