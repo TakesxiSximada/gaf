@@ -19,6 +19,10 @@ def get_version(branch_name):
     return branch_name.lstrip('release-').split('-')[0]
 
 
+def get_issue_id(branch_name):
+    return int(branch_name.split('-')[1])
+
+
 def get_pullrequest_id(url):
     return int(re.search('(?P<id>\d+)$', url).group('id'))
 
@@ -77,14 +81,16 @@ class Flow(object):
 
         os.system('git rebase -i origin/master')
         branch_name = local.head.ref.name
-        issue_number = branch_name.split('-')[1]
+        issue_id = get_issue_id(branch_name)
+        issue = remote.issue(issue_id)
         os.system('git commit --amend -m "{}"'.format(
-            title + ' fixes #{}'.format(issue_number)))
+            title + ' fixes #{}'.format(issue_id)))
         local.git.push('origin', branch_name, force=True)
 
         for retry in range(5):  # retry count
             try:
                 pullreq = remote.create_pull(title, 'master', branch_name)
+                pullreq.update(body='See {}'.format(issue.html_url))
                 return pullreq
             except github3.exceptions.UnprocessableEntity:
                 logger.exception('Cannot create pullrequest: retry={}'.format(retry))
