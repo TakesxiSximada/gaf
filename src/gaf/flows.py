@@ -218,6 +218,7 @@ class ReleaseFlow(object):
 
         tag = local.create_tag(version)
         local.remote().push()
+        local.remote().push(tags=True)
 
         release.edit(draft=False, tag_name=tag.name)
 
