@@ -82,11 +82,14 @@ class Flow(object):
             title + ' fixes #{}'.format(issue_number)))
         local.git.push('origin', branch_name, force=True)
 
-        try:
-            pr = remote.create_pull(title, 'master', branch_name)
-            return pr
-        except github3.exceptions.UnprocessableEntity:
-            print('Already create pullrequest: branch={}'.format(branch_name))
+        for retry in range(5):  # retry count
+            try:
+                pullreq = remote.create_pull(title, 'master', branch_name)
+                return pullreq
+            except github3.exceptions.UnprocessableEntity:
+                logger.exception('Cannot create pullrequest: retry={}'.format(retry))
+                continue
+        print('Already create pullrequest or other error: branch={}'.format(branch_name))
 
 
 class ReleaseFlow(object):
