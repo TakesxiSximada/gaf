@@ -26,9 +26,9 @@ def main(argv=sys.argv[1:]):
             'See https://github.com/settings/tokens'
             )
         return 1
-    pr = flow.fix(title=title)
-    if pr:
-        print('Create pullrequest: {}'.format(pr.url))
+    pullreq = flow.fix(title=title)
+    if pullreq:
+        print('Create pullrequest: {}'.format(pullreq.html_url))
 
 
 if __name__ == '__main__':
