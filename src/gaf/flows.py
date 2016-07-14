@@ -217,9 +217,11 @@ class ReleaseFlow(object):
         if release is None:
             raise GafError('Release not found')
 
+        issue = pullreq.issue()
+        issue.add_labels(Label.accept.name)
+
         local.git.checkout('master')
         self.merge(pullreq.html_url)  # master merge
-        pullreq.create_comment('Released!!')
         pullreq.close()
 
         local.delete_head(pullreq.head.ref)
@@ -231,6 +233,7 @@ class ReleaseFlow(object):
 
         release.edit(draft=False, tag_name=tag.name)
 
+        pullreq.create_comment('Released!! {}'.format(release.html_url))
         return release
 
 
