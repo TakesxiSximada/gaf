@@ -3,6 +3,7 @@ import re
 import logging
 
 import github3.exceptions
+from pyramid.path import DottedNameResolver
 
 from gaf.labels import Label
 from gaf.exc import (
@@ -100,6 +101,20 @@ class Flow(object):
     def pullrequests(self):
         remote = self.repo.remote
         return remote.pull_requests()
+
+    def debug(self, debugger):
+        local = self.repo.local  # noqa
+        remote = self.repo.remote  # noqa
+
+        resolve = DottedNameResolver()
+        debugger_obj = resolve.maybe_resolve(debugger)
+        set_trace = getattr(debugger_obj, 'set_trace', None)
+        if not callable(set_trace):
+            print('Invalid debugger: {}: using pdb'.format(debugger))
+            import pdb
+            set_trace = pdb.set_trace
+        set_trace()  # DEBUGGING
+        pass
 
 
 class ReleaseFlow(object):
