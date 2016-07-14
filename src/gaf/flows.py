@@ -167,12 +167,24 @@ class ReleaseFlow(object):
         #     author.name, author.email,
         #     ))
 
+        # get release pull request
+        release_pullreq = None
+        if not local.head.ref.name.startswith('release-'):
+            raise GafError('No release branch: {}'.format(local.head))
+
+        for _release_pullreq in remote.pull_requests():
+            if _release_pullreq.head.ref == local.head.ref.name:
+                release_pullreq = _release_pullreq
+                break
+        if not release_pullreq:
+            raise GafError('No release pull reqequest: {}'.format(local.head))
+
         accept_message = (
             'Thanks!! '
-            'This pull request is merged. '
+            'This pull request is merged. \n'
             'Until the new version {} is released, '
-            'please wait for a while.'
-            ).format(version)
+            'please wait for a while. {}'
+            ).format(version, release_pullreq.html_url)
 
         issue = pr.issue()
         issue.add_labels(Label.accept.name)
