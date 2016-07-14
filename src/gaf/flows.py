@@ -97,6 +97,10 @@ class Flow(object):
                 continue
         print('Already create pullrequest or other error: branch={}'.format(branch_name))
 
+    def pullrequests(self):
+        remote = self.repo.remote
+        return remote.pull_requests()
+
 
 class ReleaseFlow(object):
     def __init__(self, repo):
