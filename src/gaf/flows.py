@@ -1,6 +1,7 @@
 import os
 import re
 import logging
+import tempfile
 
 import github3.exceptions
 from pyramid.path import DottedNameResolver
@@ -84,8 +85,12 @@ class Flow(object):
         branch_name = local.head.ref.name
         issue_id = get_issue_id(branch_name)
         issue = remote.issue(issue_id)
-        os.system('git commit --amend -m "{}"'.format(
-            title + ' fixes #{}'.format(issue_id)))
+        with tempfile.NamedTemporaryFile() as fp:
+            message = '{}\n\nfixes #{}'.format(title, issue_id).encode()
+            fp.write(message)
+            fp.flush()
+            os.system('git commit --amend -F {}'.format(fp.name))
+        local.index.commit(message=message)
         local.git.push('origin', branch_name, force=True)
 
         for retry in range(5):  # retry count
