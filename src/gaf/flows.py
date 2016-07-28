@@ -78,10 +78,11 @@ class Flow(object):
         return issue
 
     def fix(self, title):
+        main_branch = os.environ.get('GAF_MAIN_BRANCH', 'master')
         local = self.repo.local
         remote = self.repo.remote
 
-        os.system('git rebase -i origin/master')
+        os.system('git rebase -i origin/{}'.format(main_branch))
         branch_name = local.head.ref.name
         issue_id = get_issue_id(branch_name)
         issue = remote.issue(issue_id)
@@ -95,7 +96,7 @@ class Flow(object):
 
         for retry in range(5):  # retry count
             try:
-                pullreq = remote.create_pull(title, 'master', branch_name)
+                pullreq = remote.create_pull(title, main_branch, branch_name)
                 pullreq.update(body='See {}'.format(issue.html_url))
                 return pullreq
             except github3.exceptions.UnprocessableEntity:
